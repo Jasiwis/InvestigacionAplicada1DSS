@@ -58,40 +58,45 @@ class NotasController {
         }
 
         // Crear la nota en el modelo
-        $nuevaNota = $this->model->crearNota($titulo, $contenido);
+        $nuevaNota = $this->model->agregarNota(['titulo' => $titulo, 'contenido' => $contenido]);
 
-        // Devolver respuesta exitosa
-        echo json_encode(["message" => "Nota creada exitosamente", "nota" => $nuevaNota]);
+        if ($nuevaNota) {
+            echo json_encode(["message" => "Nota creada exitosamente"]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["message" => "Error al crear la nota"]);
+        }
     }
 
     // Actualizar una nota existente
-    public function actualizarNota($id) {
-        // Verificar token JWT antes de procesar la solicitud
-        AuthMiddleware::verificarToken();
+public function actualizarNota($id) {
+    // Verificar token JWT antes de procesar la solicitud
+    AuthMiddleware::verificarToken();
 
-        // Obtener los datos de la nota desde el cuerpo de la solicitud
-        $datos = json_decode(file_get_contents("php://input"), true);
-        $titulo = $datos['titulo'] ?? '';
-        $contenido = $datos['contenido'] ?? '';
+    // Obtener los datos de la nota desde el cuerpo de la solicitud
+    $datos = json_decode(file_get_contents("php://input"), true);
+    $titulo = $datos['titulo'] ?? '';
+    $contenido = $datos['contenido'] ?? '';
 
-        // Verificar que los datos sean válidos
-        if (empty($titulo) || empty($contenido)) {
-            http_response_code(400);
-            echo json_encode(["message" => "Título y contenido son requeridos"]);
-            return;
-        }
-
-        // Actualizar la nota en el modelo
-        $notaActualizada = $this->model->actualizarNota($id, $titulo, $contenido);
-
-        // Si la nota no fue encontrada para actualizar
-        if ($notaActualizada) {
-            echo json_encode(["message" => "Nota actualizada exitosamente", "nota" => $notaActualizada]);
-        } else {
-            http_response_code(404);
-            echo json_encode(["message" => "Nota no encontrada"]);
-        }
+    // Verificar que los datos sean válidos
+    if (empty($titulo) || empty($contenido)) {
+        http_response_code(400);
+        echo json_encode(["message" => "Título y contenido son requeridos"]);
+        return;
     }
+
+    // Actualizar la nota en el modelo
+    $notaActualizada = $this->model->editarNota($id, $titulo, $contenido);
+
+    // Si la nota fue encontrada y actualizada, retornar los datos
+    if ($notaActualizada) {
+        echo json_encode(["message" => "Nota actualizada exitosamente", "nota" => $notaActualizada]);
+    } else {
+        http_response_code(404);
+        echo json_encode(["message" => "Nota no encontrada"]);
+    }
+}
+
 
     // Eliminar una nota
     public function eliminarNota($id) {
@@ -99,7 +104,7 @@ class NotasController {
         AuthMiddleware::verificarToken();
 
         // Eliminar la nota en el modelo
-        $eliminada = $this->model->eliminarNota($id);
+        $eliminada = $this->model->borrarNota($id);
 
         // Si la nota fue eliminada exitosamente
         if ($eliminada) {

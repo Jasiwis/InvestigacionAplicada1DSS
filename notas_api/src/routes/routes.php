@@ -2,11 +2,22 @@
 // routes.php - Manejo de rutas de la API
 
 require_once __DIR__ . '/../controllers/NotasController.php';
+require_once __DIR__ . '/../controllers/AuthController.php';
 
+// Definir la función handleRequest para manejar las rutas
 function handleRequest($method, $uri) {
+    // Crear instancias de los controladores
     $controller = new NotasController();
+    $authController = new AuthController();
 
+    // Manejar la solicitud según el método y la URI
     switch (true) {
+        // Rutas de autenticación (login)
+        case preg_match('/\/api\/login$/', $uri) && $method == 'POST':
+            $authController->login();
+            exit; // Detener la ejecución después de la autenticación
+        
+        // Rutas de notas
         case preg_match('/\/api\/notas$/', $uri) && $method == 'GET':
             $controller->obtenerNotas();
             break;
@@ -23,21 +34,11 @@ function handleRequest($method, $uri) {
             $controller->eliminarNota($matches[1]);
             break;
 
+        // Si no se encuentra la ruta, devolver 404
         default:
             http_response_code(404);
             echo json_encode(["message" => "Ruta no encontrada"]);
             break;
     }
 }
-
-require_once __DIR__ . '/../controllers/AuthController.php';
-
-$authController = new AuthController();
-
-switch (true) {
-    case preg_match('/\/api\/login$/', $uri) && $method == 'POST':
-        $authController->login();
-        break;
-}
-
 ?>
