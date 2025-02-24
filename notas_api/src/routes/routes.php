@@ -29,4 +29,15 @@ function handleRequest($method, $uri) {
             break;
     }
 }
+
+require_once __DIR__ . '/../controllers/AuthController.php';
+
+$authController = new AuthController();
+
+switch (true) {
+    case preg_match('/\/api\/login$/', $uri) && $method == 'POST':
+        $authController->login();
+        break;
+}
+
 ?>
