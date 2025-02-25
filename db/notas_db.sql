@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-02-2025 a las 23:38:27
+-- Tiempo de generación: 25-02-2025 a las 00:33:51
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -32,6 +32,13 @@ CREATE TABLE `notas` (
   `titulo` varchar(255) NOT NULL,
   `contenido` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `notas`
+--
+
+INSERT INTO `notas` (`id`, `titulo`, `contenido`) VALUES
+(1, 'Nuevo título', 'Este es el contenido actualizado de la nota.');
 
 -- --------------------------------------------------------
 
@@ -77,7 +84,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
