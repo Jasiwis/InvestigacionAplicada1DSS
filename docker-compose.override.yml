@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  php-apache:
+    environment:
+      - APP_ENV=development
+      - DEBUG=true
+    volumes:
+      - .:/var/www/html
+      - ./logs:/var/log/apache2 # Mapea logs de Apache en un directorio local
+    ports:
+      - "8080:80" # Asegúrate de que coincide con el `docker-compose.yml`
+  
+  db:
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=notas_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password

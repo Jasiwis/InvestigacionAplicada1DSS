@@ -1,0 +1,6 @@
+# Ignorar dependencias locales y archivos innecesarios
+node_modules
+vendor
+.git
+.env
+.DS_Store
