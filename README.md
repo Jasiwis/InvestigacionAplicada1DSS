@@ -25,7 +25,9 @@ José Manuel Reyes Echeverría - RE242138
 
 **Exposición**
 
-
 https://youtu.be/hFqwnG8rWPM?si=Z6hNAKGjRvVapsRQ
 
+
 **Explicación de ejercicio**
+
+https://drive.google.com/file/d/1E-1meapvXqLLU35UK6aGQVfyt6QID7Kz/view?usp=sharing
