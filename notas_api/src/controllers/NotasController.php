@@ -1,6 +1,8 @@
 <?php
 // NotasController.php - Controlador para manejar las notas
 
+require_once __DIR__ . '/../models/Notas.php';
+require_once __DIR__ . '/../middleware/AuthMiddleware.php';
 
 class NotasController {
     private $model;
