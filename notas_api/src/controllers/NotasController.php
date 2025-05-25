@@ -1,8 +1,6 @@
 <?php
 // NotasController.php - Controlador para manejar las notas
 
-require_once __DIR__ . '/../models/Notas.php';
-require_once __DIR__ . '/../middleware/AuthMiddleware.php';
 
 class NotasController {
     private $model;
@@ -11,15 +9,13 @@ class NotasController {
         $this->model = new Notas();
     }
 
-    // Obtener todas las notas
     public function obtenerNotas() {
-        // Verificar token JWT antes de procesar la solicitud
+
         AuthMiddleware::verificarToken(); 
 
         // Obtener todas las notas del modelo
         $notas = $this->model->listarNotas();
 
-        // Devolver las notas en formato JSON
         echo json_encode($notas);
     }
 
